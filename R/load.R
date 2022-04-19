@@ -96,6 +96,7 @@ load_and_clean_DAISY_data<-function(dataloc,
 #' @param log2 Logical indicating whether or not to log2 transform the iggdata
 #' 
 #' @return a list containing two data frames, igg and pheno
+#' @export
 load_and_clean_PAGODA_data<-function(fileloc,
                                      removeoutliers = F, 
                                      backgroundThesholdval = 1,
