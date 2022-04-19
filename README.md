@@ -1,7 +1,7 @@
 # Glycancc
 Package to analyze anti-carbohydrate antibody population data
 
-# To Install
+# To Install (total time < 5min)
 The packages "[PCAtools](https://bioconductor.org/packages/release/bioc/html/PCAtools.html)" and "[ComplexHeatmap](https://www.bioconductor.org/packages/release/bioc/html/ComplexHeatmap.html)" have to be installed seperately from Bioconductor first before package installation.
 ```
 if (!require("BiocManager", quietly = TRUE))
@@ -18,7 +18,7 @@ if (!require("devtools", quietly = TRUE))
 devtools::install_github("pmtran5884/Glycancc")
 ```
 
-# Usage
+# Usage (time <5 min)
 See "code for figures" folder for detailed code for generating manuscript figures
 
 ### Load library and set seed
