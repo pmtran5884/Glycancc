@@ -65,3 +65,6 @@ forest_plot_lm_model(daisy_model)
 
 # End
 For more information, please read the preprint on Research Square "[The Anti-carbohydrate antibody repertoire in type 1 diabetes](https://assets.researchsquare.com/files/rs-1490184/v1_covered.pdf?c=1649958275)"
+
+#Citation
+If you use the package and its code, please cite the release from Zenodo (DOI: 10.5281/zenodo.7143430).
