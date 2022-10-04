@@ -1,7 +1,7 @@
 #ACA predictive models
 #Date: March 9, 2022
 #Author: Paul Tran
-#Updated: July 7, 2022
+#Updated: October 4, 2022
 
 rm(list = ls())
 
@@ -120,5 +120,40 @@ lmtest::lrtest(cl8mod, fullmod)
 
 # test_roc<-plot(pROC::smooth(pROC::roc(fastDummies::dummy_cols(daisy$combined$Grouprand1[daisy$combined$Grouprand1!="Non-progressor"])[,4],
 #                          predict(randmod1),ci=T)),print.auc=T,col="grey")
+
+
+############### Figure 5b #############
+#partial r-squared
+myrsq<-data.frame(rsq::rsq.partial(fullmod,adj = T))
+myrsq2<-rbind.data.frame(myrsq[1:4,],
+                         c("TRUE","GLYCANS",sum(myrsq$partial.rsq[grep("Cluster",myrsq$variable)])))
+myrsq2$partial.rsq<-as.numeric(myrsq2$partial.rsq)
+
+ggplot2::ggplot(myrsq2,ggplot2::aes(x=partial.rsq,y=variable))+ggplot2::geom_col()+ggplot2::theme_classic()
+
+
+############## Figure 5c #############
+
+#AUC saturation analysis
+daisy_prog<-list()
+daisy_prog$igg<-daisy$igg[daisy$pheno$Group!="Non-progressor",]
+daisy_prog$pheno<-daisy$pheno[daisy$pheno$Group!="Non-progressor",]
+
+#random gly ridge model
+auc_df<-data.frame("no_gly"=0,"mean"=0,"lowerCI"=0,"upperCI"=0)[-1,]
+
+for (i in seq(1,200,10)){
+  x <- replicate(1000, {glmnet_auc(daisy_prog,i)})
+  auc_df<-rbind.data.frame(auc_df,
+                           c(i,mean(x),mean(x)-1.96*sd(x),mean(x)+1.96*sd(x)))
+}
+colnames(auc_df)<-c("no_gly","AUC","lowerCI","upperCI")
+
+#plot
+ggplot2::ggplot(data=auc_df,ggplot2::aes(x=no_gly,y=AUC))+
+  ggplot2::geom_point()+
+  ggplot2::geom_errorbar(ggplot2::aes(ymin=lowerCI,ymax=upperCI))+
+  ggplot2::theme_classic()#+
+# geom_function(fun=function(x)log(x,3))
 
 
